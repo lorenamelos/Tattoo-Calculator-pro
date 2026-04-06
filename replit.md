@@ -16,6 +16,16 @@ pnpm workspace monorepo using TypeScript. Each package manages its own dependenc
 - **API codegen**: Orval (from OpenAPI spec)
 - **Build**: esbuild (CJS bundle)
 
+## Artifacts
+
+### Calculadora de Tatuagem (`artifacts/tattoo-calc`)
+- Frontend-only React + Vite app (no backend needed)
+- All data persisted in localStorage
+- 3 pages: Configuracoes, Orcamento, Resultado
+- Calculates tattoo pricing with studio commission, materials, hourly rate, fixed costs, and card installment fees
+- Formula: `Valor a Cobrar = Valor a Receber / (1 - %estudio - %maquina)`
+- Installment table from 2x to 10x with configurable card rates
+
 ## Key Commands
 
 - `pnpm run typecheck` — full typecheck across all packages
