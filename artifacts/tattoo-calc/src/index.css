@@ -68,72 +68,73 @@
 }
 
 :root {
-  --button-outline: rgba(0,0,0, .10);
-  --badge-outline: rgba(0,0,0, .05);
-  --opaque-button-border-intensity: -8;
-  --elevate-1: rgba(0,0,0, .03);
-  --elevate-2: rgba(0,0,0, .08);
+  --button-outline: rgba(255,255,255, .12);
+  --badge-outline: rgba(255,255,255, .06);
+  --opaque-button-border-intensity: 8;
+  --elevate-1: rgba(255,255,255, .04);
+  --elevate-2: rgba(255,255,255, .09);
 
-  --background: 0 0% 98%;
-  --foreground: 220 15% 15%;
-  --border: 220 13% 88%;
-  --input: 220 13% 85%;
-  --ring: 142 70% 35%;
+  /* Dark tattoo studio theme */
+  --background: 0 0% 7%;
+  --foreground: 0 0% 93%;
+  --border: 0 0% 18%;
+  --input: 0 0% 20%;
+  --ring: 0 72% 48%;
 
-  --card: 0 0% 100%;
-  --card-foreground: 220 15% 15%;
-  --card-border: 220 13% 90%;
+  --card: 0 0% 11%;
+  --card-foreground: 0 0% 93%;
+  --card-border: 0 0% 18%;
 
-  --sidebar: 220 15% 96%;
-  --sidebar-foreground: 220 15% 15%;
-  --sidebar-border: 220 13% 88%;
-  --sidebar-primary: 142 70% 35%;
+  --sidebar: 0 0% 9%;
+  --sidebar-foreground: 0 0% 93%;
+  --sidebar-border: 0 0% 18%;
+  --sidebar-primary: 0 72% 48%;
   --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 142 20% 94%;
-  --sidebar-accent-foreground: 142 70% 25%;
-  --sidebar-ring: 142 70% 35%;
+  --sidebar-accent: 0 0% 14%;
+  --sidebar-accent-foreground: 0 0% 93%;
+  --sidebar-ring: 0 72% 48%;
 
-  --popover: 0 0% 100%;
-  --popover-foreground: 220 15% 15%;
-  --popover-border: 220 13% 88%;
+  --popover: 0 0% 11%;
+  --popover-foreground: 0 0% 93%;
+  --popover-border: 0 0% 18%;
 
-  --primary: 142 70% 35%;
+  --primary: 0 72% 48%;
   --primary-foreground: 0 0% 100%;
 
-  --secondary: 220 13% 95%;
-  --secondary-foreground: 220 15% 25%;
+  --secondary: 0 0% 15%;
+  --secondary-foreground: 0 0% 85%;
 
-  --muted: 220 13% 95%;
-  --muted-foreground: 220 10% 45%;
+  --muted: 0 0% 14%;
+  --muted-foreground: 0 0% 52%;
 
-  --accent: 142 30% 94%;
-  --accent-foreground: 142 70% 25%;
+  --accent: 0 0% 16%;
+  --accent-foreground: 0 0% 93%;
 
-  --destructive: 0 84% 60%;
+  --destructive: 0 72% 48%;
   --destructive-foreground: 0 0% 100%;
 
-  --success: 142 70% 35%;
+  --success: 142 60% 40%;
   --success-foreground: 0 0% 100%;
 
-  --chart-1: 142 70% 35%;
+  --chart-1: 0 72% 48%;
   --chart-2: 217 91% 60%;
   --chart-3: 38 92% 50%;
   --chart-4: 280 65% 60%;
-  --chart-5: 340 75% 55%;
+  --chart-5: 142 60% 40%;
 
   --app-font-sans: 'Inter', system-ui, sans-serif;
   --app-font-serif: Georgia, serif;
   --app-font-mono: Menlo, monospace;
   --radius: .625rem;
 
-  --shadow-2xs: 0px 1px 2px 0px rgba(0,0,0,0.04);
-  --shadow-xs: 0px 1px 3px 0px rgba(0,0,0,0.06);
-  --shadow-sm: 0px 2px 4px 0px rgba(0,0,0,0.06);
-  --shadow: 0px 4px 6px -1px rgba(0,0,0,0.07);
-  --shadow-md: 0px 4px 8px -2px rgba(0,0,0,0.08);
-  --shadow-lg: 0px 8px 16px -4px rgba(0,0,0,0.09);
-  --shadow-xl: 0px 16px 24px -8px rgba(0,0,0,0.10);
-  --shadow-2xl: 0px 24px 40px -12px rgba(0,0,0,0.12);
+  --shadow-2xs: 0px 1px 2px 0px rgba(0,0,0,0.3);
+  --shadow-xs: 0px 1px 3px 0px rgba(0,0,0,0.35);
+  --shadow-sm: 0px 2px 4px 0px rgba(0,0,0,0.4);
+  --shadow: 0px 4px 6px -1px rgba(0,0,0,0.45);
+  --shadow-md: 0px 4px 8px -2px rgba(0,0,0,0.5);
+  --shadow-lg: 0px 8px 16px -4px rgba(0,0,0,0.55);
+  --shadow-xl: 0px 16px 24px -8px rgba(0,0,0,0.6);
+  --shadow-2xl: 0px 24px 40px -12px rgba(0,0,0,0.7);
   --tracking-normal: 0em;
   --spacing: 0.25rem;
 
@@ -230,5 +231,14 @@
   .border.active-elevate-2:not(.no-active-interaction-elevate)::after,
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
     inset: -1px;
+  }
+
+  /* Red glow effect for primary buttons */
+  .btn-primary-glow {
+    box-shadow: 0 0 20px hsl(0 72% 48% / 0.35);
+  }
+
+  .btn-primary-glow:hover {
+    box-shadow: 0 0 28px hsl(0 72% 48% / 0.5);
   }
 }

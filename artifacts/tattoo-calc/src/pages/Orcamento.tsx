@@ -34,7 +34,7 @@ function NumInput({
         <div className="flex items-center gap-3">
           <button
             onClick={() => onChange(Math.max(min, value - step))}
-            className="w-8 h-8 flex items-center justify-center rounded-lg border border-border text-foreground hover:bg-secondary transition-colors"
+            className="w-8 h-8 flex items-center justify-center rounded-lg border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
           >
             <Minus className="w-3.5 h-3.5" />
           </button>
@@ -56,7 +56,7 @@ function NumInput({
     <div className="flex flex-col gap-1">
       <label className="text-sm font-medium text-foreground">{label}</label>
       {sublabel && <p className="text-xs text-muted-foreground">{sublabel}</p>}
-      <div className="flex items-center border border-border rounded-lg overflow-hidden bg-card focus-within:ring-2 focus-within:ring-ring transition-all">
+      <div className="flex items-center border border-border rounded-lg overflow-hidden bg-card focus-within:ring-2 focus-within:ring-primary/40 focus-within:border-primary transition-all">
         {prefix && (
           <span className="px-3 py-2 bg-muted text-muted-foreground text-sm border-r border-border">
             {prefix}
@@ -123,7 +123,7 @@ export default function OrcamentoPage() {
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border px-4 py-3">
         <div className="max-w-lg mx-auto flex items-center gap-3">
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/configuracoes")}
             className="p-1.5 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground"
           >
             <ArrowLeft className="w-5 h-5" />
@@ -217,7 +217,7 @@ export default function OrcamentoPage() {
 
         <button
           onClick={handleCalcular}
-          className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-primary text-primary-foreground rounded-xl text-base font-semibold hover:opacity-90 transition-opacity shadow-md mb-6"
+          className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-primary text-primary-foreground rounded-xl text-base font-semibold hover:opacity-90 transition-opacity btn-primary-glow mb-6"
         >
           Calcular preco
           <ArrowRight className="w-5 h-5" />

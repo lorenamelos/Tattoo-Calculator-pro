@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useLocation } from "wouter";
 import { loadConfig, saveConfig, DEFAULT_CONFIG, type Configuracao } from "@/lib/store";
-import { ArrowRight, Settings, RotateCcw } from "lucide-react";
+import { logout } from "@/lib/auth";
+import { ArrowRight, Settings, RotateCcw, LogOut } from "lucide-react";
 
 function NumInput({
   label,
@@ -23,7 +24,7 @@ function NumInput({
   return (
     <div className="flex flex-col gap-1">
       <label className="text-sm font-medium text-foreground">{label}</label>
-      <div className="flex items-center border border-border rounded-lg overflow-hidden bg-card focus-within:ring-2 focus-within:ring-ring transition-all">
+      <div className="flex items-center border border-border rounded-lg overflow-hidden bg-card focus-within:ring-2 focus-within:ring-primary/40 focus-within:border-primary transition-all">
         {prefix && (
           <span className="px-3 py-2 bg-muted text-muted-foreground text-sm border-r border-border">
             {prefix}
@@ -89,6 +90,11 @@ export default function ConfiguracaoPage() {
     navigate("/orcamento");
   }
 
+  function handleLogout() {
+    logout();
+    navigate("/");
+  }
+
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border px-4 py-3">
@@ -98,16 +104,23 @@ export default function ConfiguracaoPage() {
             <h1 className="text-lg font-bold text-foreground">Configuracoes</h1>
           </div>
           <div className="flex items-center gap-2">
+            {saved && (
+              <span className="text-xs text-primary font-medium">Salvo!</span>
+            )}
             <button
               onClick={handleReset}
-              className="flex items-center gap-1 px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground border border-border rounded-lg transition-colors"
+              className="flex items-center gap-1 px-2.5 py-1.5 text-xs text-muted-foreground hover:text-foreground border border-border rounded-lg transition-colors"
             >
               <RotateCcw className="w-3 h-3" />
               Resetar
             </button>
-            {saved && (
-              <span className="text-xs text-primary font-medium">Salvo!</span>
-            )}
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1 px-2.5 py-1.5 text-xs text-muted-foreground hover:text-foreground border border-border rounded-lg transition-colors"
+              title="Sair"
+            >
+              <LogOut className="w-3 h-3" />
+            </button>
           </div>
         </div>
       </header>
@@ -248,13 +261,13 @@ export default function ConfiguracaoPage() {
         <div className="flex gap-3 pb-6">
           <button
             onClick={handleSave}
-            className="flex-1 py-3 px-4 border border-border rounded-xl text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+            className="flex-1 py-3 px-4 border border-border rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
           >
             Salvar configuracoes
           </button>
           <button
             onClick={handleNext}
-            className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity shadow-sm"
+            className="flex-1 flex items-center justify-center gap-2 py-3 px-4 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity btn-primary-glow"
           >
             Fazer orcamento
             <ArrowRight className="w-4 h-4" />

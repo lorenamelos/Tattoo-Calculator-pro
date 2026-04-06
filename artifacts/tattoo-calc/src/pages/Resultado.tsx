@@ -83,14 +83,14 @@ export default function ResultadoPage() {
       </header>
 
       <main className="max-w-lg mx-auto px-4 py-6 space-y-5">
-        <div className="bg-gradient-to-br from-primary/10 to-primary/5 border border-primary/20 rounded-2xl p-5 shadow-sm">
-          <div className="flex items-start justify-between mb-1">
-            <div className="flex items-center gap-2">
-              <CheckCircle className="w-5 h-5 text-primary" />
-              <p className="text-sm font-semibold text-primary">VALOR A COBRAR — SEM JUROS</p>
-            </div>
+        <div className="bg-primary/10 border border-primary/25 rounded-2xl p-5 shadow-sm">
+          <div className="flex items-start gap-2 mb-1">
+            <CheckCircle className="w-5 h-5 text-primary mt-0.5 shrink-0" />
+            <p className="text-sm font-semibold text-primary tracking-wide uppercase">
+              Valor a cobrar — sem juros
+            </p>
           </div>
-          <p className="text-4xl font-bold text-primary mt-2">
+          <p className="text-4xl font-bold text-foreground mt-2">
             {formatBRL(resultado.valorCobrarSemJuros)}
           </p>
           <p className="text-sm text-muted-foreground mt-2">
@@ -119,7 +119,7 @@ export default function ResultadoPage() {
         <div className="bg-card border border-card-border rounded-xl p-5 shadow-sm">
           <div className="flex items-center gap-2 mb-3">
             <DollarSign className="w-4 h-4 text-muted-foreground" />
-            <h2 className="text-base font-semibold text-foreground">Valor com juros — maquininha</h2>
+            <h2 className="text-base font-semibold text-foreground">Com juros — maquininha</h2>
           </div>
           <p className="text-xs text-muted-foreground mb-3">
             Valores ajustados para cobrir taxa da maquininha e comissao do estudio
@@ -132,13 +132,13 @@ export default function ResultadoPage() {
         <div className="flex gap-3 pb-6">
           <button
             onClick={() => navigate("/orcamento")}
-            className="flex-1 py-3 px-4 border border-border rounded-xl text-sm font-medium text-foreground hover:bg-secondary transition-colors"
+            className="flex-1 py-3 px-4 border border-border rounded-xl text-sm font-medium text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors"
           >
             Novo orcamento
           </button>
           <button
-            onClick={() => navigate("/")}
-            className="flex-1 py-3 px-4 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity shadow-sm"
+            onClick={() => navigate("/configuracoes")}
+            className="flex-1 py-3 px-4 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity btn-primary-glow"
           >
             Configuracoes
           </button>
