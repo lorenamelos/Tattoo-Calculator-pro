@@ -90,8 +90,8 @@ export default function ConfiguracaoPage() {
     navigate("/orcamento");
   }
 
-  function handleLogout() {
-    logout();
+  async function handleLogout() {
+    await logout();
     navigate("/");
   }
 

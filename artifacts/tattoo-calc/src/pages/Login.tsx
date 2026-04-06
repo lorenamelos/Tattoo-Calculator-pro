@@ -1,26 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { login } from "@/lib/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 
 export default function LoginPage() {
   const [, navigate] = useLocation();
+  const { session, loading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!loading && session) {
+      navigate("/configuracoes");
+    }
+  }, [session, loading, navigate]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 300));
-    const result = login(email, password);
-    setLoading(false);
-    if (result.success) {
-      navigate("/configuracoes");
-    } else {
+    setSubmitting(true);
+    const result = await login(email, password);
+    setSubmitting(false);
+    if (!result.success) {
       setError(result.error ?? "Erro ao entrar.");
     }
   }
@@ -96,10 +101,10 @@ export default function LoginPage() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={submitting}
               className="w-full py-3.5 px-6 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:opacity-90 transition-all btn-primary-glow disabled:opacity-50 disabled:cursor-not-allowed mt-2"
             >
-              {loading ? "Entrando..." : "Entrar"}
+              {submitting ? "Entrando..." : "Entrar"}
             </button>
           </form>
 

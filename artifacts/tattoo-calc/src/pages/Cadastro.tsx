@@ -1,16 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { register } from "@/lib/auth";
+import { useAuth } from "@/contexts/AuthContext";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 
 export default function CadastroPage() {
   const [, navigate] = useLocation();
+  const { session, loading } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    if (!loading && session) {
+      navigate("/configuracoes");
+    }
+  }, [session, loading, navigate]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -19,15 +28,38 @@ export default function CadastroPage() {
       setError("As senhas nao coincidem.");
       return;
     }
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 300));
-    const result = register(email, password);
-    setLoading(false);
+    setSubmitting(true);
+    const result = await register(email, password);
+    setSubmitting(false);
     if (result.success) {
-      navigate("/configuracoes");
+      setSuccess(true);
     } else {
       setError(result.error ?? "Erro ao criar conta.");
     }
+  }
+
+  if (success) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center px-5">
+        <div className="w-full max-w-sm text-center space-y-4">
+          <div className="w-14 h-14 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center mx-auto">
+            <svg className="w-7 h-7 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-bold text-foreground">Conta criada!</h2>
+          <p className="text-sm text-muted-foreground">
+            Verifique seu e-mail para confirmar a conta e depois faca o login.
+          </p>
+          <button
+            onClick={() => navigate("/login")}
+            className="w-full py-3 px-6 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity btn-primary-glow"
+          >
+            Ir para o login
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
@@ -49,7 +81,7 @@ export default function CadastroPage() {
           <div className="mb-8 text-center">
             <h1 className="text-2xl font-bold text-foreground">Criar conta</h1>
             <p className="text-muted-foreground text-sm mt-1">
-              Gratis. Sem cartao de credito.
+              Gratis. Dados salvos com seguranca.
             </p>
           </div>
 
@@ -116,10 +148,10 @@ export default function CadastroPage() {
 
             <button
               type="submit"
-              disabled={loading}
+              disabled={submitting}
               className="w-full py-3.5 px-6 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:opacity-90 transition-all btn-primary-glow disabled:opacity-50 disabled:cursor-not-allowed mt-2"
             >
-              {loading ? "Criando conta..." : "Criar conta"}
+              {submitting ? "Criando conta..." : "Criar conta"}
             </button>
           </form>
 
