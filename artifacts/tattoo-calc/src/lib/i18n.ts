@@ -291,4 +291,4 @@ export const translations = {
   },
 } as const;
 
-export type Translations = typeof translations.pt;
+export type Translations = typeof translations[Lang];
