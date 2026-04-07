@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useLocation } from "wouter";
 import { loadConfig, calcular, type OrcamentoInput } from "@/lib/store";
+import { useLang } from "@/contexts/LangContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { ArrowLeft, ArrowRight, Calculator, Minus, Plus } from "lucide-react";
 
 function NumInput({
@@ -38,9 +40,7 @@ function NumInput({
           >
             <Minus className="w-3.5 h-3.5" />
           </button>
-          <span className="w-8 text-center text-sm font-semibold text-foreground">
-            {value}
-          </span>
+          <span className="w-8 text-center text-sm font-semibold text-foreground">{value}</span>
           <button
             onClick={() => onChange(value + step)}
             className="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-primary-foreground hover:opacity-90 transition-opacity"
@@ -57,11 +57,7 @@ function NumInput({
       <label className="text-sm font-medium text-foreground">{label}</label>
       {sublabel && <p className="text-xs text-muted-foreground">{sublabel}</p>}
       <div className="flex items-center border border-border rounded-lg overflow-hidden bg-card focus-within:ring-2 focus-within:ring-primary/40 focus-within:border-primary transition-all">
-        {prefix && (
-          <span className="px-3 py-2 bg-muted text-muted-foreground text-sm border-r border-border">
-            {prefix}
-          </span>
-        )}
+        {prefix && <span className="px-3 py-2 bg-muted text-muted-foreground text-sm border-r border-border">{prefix}</span>}
         <input
           type="number"
           step={step}
@@ -70,11 +66,7 @@ function NumInput({
           onChange={(e) => onChange(parseFloat(e.target.value) || 0)}
           className="flex-1 px-3 py-2 text-sm bg-transparent text-foreground outline-none min-w-0"
         />
-        {suffix && (
-          <span className="px-3 py-2 bg-muted text-muted-foreground text-sm border-l border-border">
-            {suffix}
-          </span>
-        )}
+        {suffix && <span className="px-3 py-2 bg-muted text-muted-foreground text-sm border-l border-border">{suffix}</span>}
       </div>
     </div>
   );
@@ -103,6 +95,9 @@ const DEFAULT_ORCAMENTO: OrcamentoInput = {
 export default function OrcamentoPage() {
   const [orcamento, setOrcamento] = useState<OrcamentoInput>({ ...DEFAULT_ORCAMENTO });
   const [, navigate] = useLocation();
+  const { t, lang } = useLang();
+
+  const currencyPrefix = lang === "pt" ? "R$" : "$";
 
   function update(field: keyof OrcamentoInput, value: number) {
     setOrcamento((prev) => ({ ...prev, [field]: value }));
@@ -121,105 +116,54 @@ export default function OrcamentoPage() {
   return (
     <div className="min-h-screen bg-background">
       <header className="sticky top-0 z-10 bg-background/95 backdrop-blur-sm border-b border-border px-4 py-3">
-        <div className="max-w-lg mx-auto flex items-center gap-3">
-          <button
-            onClick={() => navigate("/configuracoes")}
-            className="p-1.5 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </button>
-          <div className="flex items-center gap-2">
-            <Calculator className="w-5 h-5 text-primary" />
-            <h1 className="text-lg font-bold text-foreground">Orcamento</h1>
+        <div className="max-w-lg mx-auto flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => navigate("/configuracoes")}
+              className="p-1.5 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </button>
+            <div className="flex items-center gap-2">
+              <Calculator className="w-5 h-5 text-primary" />
+              <h1 className="text-lg font-bold text-foreground">{t.budget.title}</h1>
+            </div>
           </div>
+          <LanguageSelector />
         </div>
       </header>
 
       <main className="max-w-lg mx-auto px-4 py-6 space-y-5">
-        <Section title="Horas de Trabalho">
+        <Section title={t.budget.section1}>
           <div className="grid grid-cols-2 gap-3">
-            <NumInput
-              label="Horas de sessao"
-              value={orcamento.horasSessao}
-              onChange={(v) => update("horasSessao", v)}
-              suffix="h"
-              step={0.5}
-            />
-            <NumInput
-              label="Horas de criacao"
-              value={orcamento.horasCriacao}
-              onChange={(v) => update("horasCriacao", v)}
-              suffix="h"
-              step={0.5}
-            />
+            <NumInput label={t.budget.sessionHours} value={orcamento.horasSessao} onChange={(v) => update("horasSessao", v)} suffix="h" step={0.5} />
+            <NumInput label={t.budget.artHours} value={orcamento.horasCriacao} onChange={(v) => update("horasCriacao", v)} suffix="h" step={0.5} />
           </div>
           <div className="mt-3 flex items-center justify-between py-2 px-3 bg-muted rounded-lg">
-            <span className="text-sm text-muted-foreground">Total de horas cobradas</span>
+            <span className="text-sm text-muted-foreground">{t.budget.totalHours}</span>
             <span className="text-sm font-semibold text-foreground">{totalHoras}h</span>
           </div>
         </Section>
 
-        <Section title="Materiais Utilizados">
+        <Section title={t.budget.section2}>
           <div>
-            <NumInput
-              label="Cartuchos"
-              sublabel="Cartuchos descartaveis"
-              value={orcamento.qtdCartuchos}
-              onChange={(v) => update("qtdCartuchos", v)}
-              isCounter
-              step={1}
-            />
-            <NumInput
-              label="Agulhas avulsas"
-              sublabel="Se nao usou cartucho"
-              value={orcamento.qtdAgulhas}
-              onChange={(v) => update("qtdAgulhas", v)}
-              isCounter
-              step={1}
-            />
-            <NumInput
-              label="Tintas"
-              sublabel="Quantidade de cores usadas"
-              value={orcamento.qtdTintas}
-              onChange={(v) => update("qtdTintas", v)}
-              isCounter
-              step={1}
-            />
-            <NumInput
-              label="Pares de luvas"
-              sublabel="Trocas durante a sessao"
-              value={orcamento.qtdLuvas}
-              onChange={(v) => update("qtdLuvas", v)}
-              isCounter
-              step={1}
-            />
-            <NumInput
-              label="Papel transfer"
-              sublabel="Folhas utilizadas"
-              value={orcamento.qtdTransfers}
-              onChange={(v) => update("qtdTransfers", v)}
-              isCounter
-              step={1}
-            />
+            <NumInput label={t.budget.cartridges} sublabel={t.budget.cartridgesSub} value={orcamento.qtdCartuchos} onChange={(v) => update("qtdCartuchos", v)} isCounter step={1} />
+            <NumInput label={t.budget.needles} sublabel={t.budget.needlesSub} value={orcamento.qtdAgulhas} onChange={(v) => update("qtdAgulhas", v)} isCounter step={1} />
+            <NumInput label={t.budget.inks} sublabel={t.budget.inksSub} value={orcamento.qtdTintas} onChange={(v) => update("qtdTintas", v)} isCounter step={1} />
+            <NumInput label={t.budget.gloves} sublabel={t.budget.glovesSub} value={orcamento.qtdLuvas} onChange={(v) => update("qtdLuvas", v)} isCounter step={1} />
+            <NumInput label={t.budget.transfers} sublabel={t.budget.transfersSub} value={orcamento.qtdTransfers} onChange={(v) => update("qtdTransfers", v)} isCounter step={1} />
           </div>
         </Section>
 
-        <Section title="Custos Extras">
-          <NumInput
-            label="Gastos administrativos / lanche"
-            sublabel="Custos extras especificos para esta tatuagem"
-            value={orcamento.custosAdmin}
-            onChange={(v) => update("custosAdmin", v)}
-            prefix="R$"
-            step={5}
-          />
+        <Section title={t.budget.section3}>
+          <NumInput label={t.budget.adminCosts} sublabel={t.budget.adminCostsSub} value={orcamento.custosAdmin} onChange={(v) => update("custosAdmin", v)} prefix={currencyPrefix} step={5} />
         </Section>
 
         <button
           onClick={handleCalcular}
           className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-primary text-primary-foreground rounded-xl text-base font-semibold hover:opacity-90 transition-opacity btn-primary-glow mb-6"
         >
-          Calcular preco
+          {t.budget.calculateBtn}
           <ArrowRight className="w-5 h-5" />
         </button>
       </main>

@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { login } from "@/lib/auth";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLang } from "@/contexts/LangContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 
 export default function LoginPage() {
   const [, navigate] = useLocation();
   const { session, loading } = useAuth();
+  const { t } = useLang();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -14,9 +17,7 @@ export default function LoginPage() {
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
-    if (!loading && session) {
-      navigate("/configuracoes");
-    }
+    if (!loading && session) navigate("/configuracoes");
   }, [session, loading, navigate]);
 
   async function handleSubmit(e: React.FormEvent) {
@@ -25,38 +26,35 @@ export default function LoginPage() {
     setSubmitting(true);
     const result = await login(email, password);
     setSubmitting(false);
-    if (!result.success) {
-      setError(result.error ?? "Erro ao entrar.");
-    }
+    if (!result.success) setError(result.error ?? t.auth.errorInvalid);
   }
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="px-4 py-4">
-        <div className="max-w-md mx-auto">
+        <div className="max-w-md mx-auto flex items-center justify-between">
           <button
             onClick={() => navigate("/")}
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
           >
             <ArrowLeft className="w-4 h-4" />
-            Voltar
+            {t.auth.back}
           </button>
+          <LanguageSelector />
         </div>
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center px-5 py-8">
         <div className="w-full max-w-sm">
           <div className="mb-8 text-center">
-            <h1 className="text-2xl font-bold text-foreground">Entrar</h1>
-            <p className="text-muted-foreground text-sm mt-1">
-              Acesse sua conta para continuar
-            </p>
+            <h1 className="text-2xl font-bold text-foreground">{t.auth.loginTitle}</h1>
+            <p className="text-muted-foreground text-sm mt-1">{t.auth.loginSubtitle}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-foreground" htmlFor="email">
-                E-mail
+                {t.auth.email}
               </label>
               <input
                 id="email"
@@ -64,14 +62,14 @@ export default function LoginPage() {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="seu@email.com"
+                placeholder={t.auth.emailPlaceholder}
                 className="w-full px-4 py-3 bg-card border border-card-border rounded-xl text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
               />
             </div>
 
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-foreground" htmlFor="password">
-                Senha
+                {t.auth.password}
               </label>
               <div className="relative">
                 <input
@@ -80,7 +78,7 @@ export default function LoginPage() {
                   autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Sua senha"
+                  placeholder={t.auth.passwordPlaceholder}
                   className="w-full px-4 py-3 pr-12 bg-card border border-card-border rounded-xl text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
                 />
                 <button
@@ -104,26 +102,24 @@ export default function LoginPage() {
               disabled={submitting}
               className="w-full py-3.5 px-6 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:opacity-90 transition-all btn-primary-glow disabled:opacity-50 disabled:cursor-not-allowed mt-2"
             >
-              {submitting ? "Entrando..." : "Entrar"}
+              {submitting ? t.auth.loginBtnLoading : t.auth.loginBtn}
             </button>
           </form>
 
           <p className="text-center text-sm text-muted-foreground mt-6">
-            Ainda nao tem conta?{" "}
+            {t.auth.noAccount}{" "}
             <button
               onClick={() => navigate("/cadastro")}
               className="text-primary hover:opacity-80 transition-opacity font-medium"
             >
-              Criar conta
+              {t.auth.createLink}
             </button>
           </p>
         </div>
       </main>
 
       <footer className="py-5 text-center">
-        <p className="text-xs text-muted-foreground">
-          Criado por <span className="text-foreground font-medium">Lorena Melo</span>
-        </p>
+        <p className="text-xs text-muted-foreground">{t.footer}</p>
       </footer>
     </div>
   );

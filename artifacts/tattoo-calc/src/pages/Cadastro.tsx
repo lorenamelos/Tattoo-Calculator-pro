@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { useLocation } from "wouter";
 import { register } from "@/lib/auth";
 import { useAuth } from "@/contexts/AuthContext";
+import { useLang } from "@/contexts/LangContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
 import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 
 export default function CadastroPage() {
   const [, navigate] = useLocation();
   const { session, loading } = useAuth();
+  const { t } = useLang();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -16,16 +19,14 @@ export default function CadastroPage() {
   const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    if (!loading && session) {
-      navigate("/configuracoes");
-    }
+    if (!loading && session) navigate("/configuracoes");
   }, [session, loading, navigate]);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
     if (password !== confirmPassword) {
-      setError("As senhas nao coincidem.");
+      setError(t.auth.errorPasswordMatch);
       return;
     }
     setSubmitting(true);
@@ -34,7 +35,7 @@ export default function CadastroPage() {
     if (result.success) {
       setSuccess(true);
     } else {
-      setError(result.error ?? "Erro ao criar conta.");
+      setError(result.error ?? t.auth.errorEmpty);
     }
   }
 
@@ -47,15 +48,13 @@ export default function CadastroPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h2 className="text-xl font-bold text-foreground">Conta criada!</h2>
-          <p className="text-sm text-muted-foreground">
-            Verifique seu e-mail para confirmar a conta e depois faca o login.
-          </p>
+          <h2 className="text-xl font-bold text-foreground">{t.auth.successTitle}</h2>
+          <p className="text-sm text-muted-foreground">{t.auth.successMsg}</p>
           <button
             onClick={() => navigate("/login")}
             className="w-full py-3 px-6 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity btn-primary-glow"
           >
-            Ir para o login
+            {t.auth.goToLogin}
           </button>
         </div>
       </div>
@@ -65,30 +64,29 @@ export default function CadastroPage() {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <header className="px-4 py-4">
-        <div className="max-w-md mx-auto">
+        <div className="max-w-md mx-auto flex items-center justify-between">
           <button
             onClick={() => navigate("/")}
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors text-sm"
           >
             <ArrowLeft className="w-4 h-4" />
-            Voltar
+            {t.auth.back}
           </button>
+          <LanguageSelector />
         </div>
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center px-5 py-8">
         <div className="w-full max-w-sm">
           <div className="mb-8 text-center">
-            <h1 className="text-2xl font-bold text-foreground">Criar conta</h1>
-            <p className="text-muted-foreground text-sm mt-1">
-              Gratis. Dados salvos com seguranca.
-            </p>
+            <h1 className="text-2xl font-bold text-foreground">{t.auth.registerTitle}</h1>
+            <p className="text-muted-foreground text-sm mt-1">{t.auth.registerSubtitle}</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-foreground" htmlFor="email">
-                E-mail
+                {t.auth.email}
               </label>
               <input
                 id="email"
@@ -96,14 +94,14 @@ export default function CadastroPage() {
                 autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder="seu@email.com"
+                placeholder={t.auth.emailPlaceholder}
                 className="w-full px-4 py-3 bg-card border border-card-border rounded-xl text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
               />
             </div>
 
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-foreground" htmlFor="password">
-                Senha
+                {t.auth.password}
               </label>
               <div className="relative">
                 <input
@@ -112,7 +110,7 @@ export default function CadastroPage() {
                   autoComplete="new-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Minimo 6 caracteres"
+                  placeholder={t.auth.passwordMin}
                   className="w-full px-4 py-3 pr-12 bg-card border border-card-border rounded-xl text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
                 />
                 <button
@@ -127,7 +125,7 @@ export default function CadastroPage() {
 
             <div className="space-y-1.5">
               <label className="text-sm font-medium text-foreground" htmlFor="confirm">
-                Confirmar senha
+                {t.auth.confirmPassword}
               </label>
               <input
                 id="confirm"
@@ -135,7 +133,7 @@ export default function CadastroPage() {
                 autoComplete="new-password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                placeholder="Repita a senha"
+                placeholder={t.auth.confirmPlaceholder}
                 className="w-full px-4 py-3 bg-card border border-card-border rounded-xl text-sm text-foreground placeholder:text-muted-foreground outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
               />
             </div>
@@ -151,26 +149,24 @@ export default function CadastroPage() {
               disabled={submitting}
               className="w-full py-3.5 px-6 bg-primary text-primary-foreground rounded-xl text-sm font-semibold hover:opacity-90 transition-all btn-primary-glow disabled:opacity-50 disabled:cursor-not-allowed mt-2"
             >
-              {submitting ? "Criando conta..." : "Criar conta"}
+              {submitting ? t.auth.registerBtnLoading : t.auth.registerBtn}
             </button>
           </form>
 
           <p className="text-center text-sm text-muted-foreground mt-6">
-            Ja tem conta?{" "}
+            {t.auth.hasAccount}{" "}
             <button
               onClick={() => navigate("/login")}
               className="text-primary hover:opacity-80 transition-opacity font-medium"
             >
-              Entrar
+              {t.auth.loginLink}
             </button>
           </p>
         </div>
       </main>
 
       <footer className="py-5 text-center">
-        <p className="text-xs text-muted-foreground">
-          Criado por <span className="text-foreground font-medium">Lorena Melo</span>
-        </p>
+        <p className="text-xs text-muted-foreground">{t.footer}</p>
       </footer>
     </div>
   );

@@ -10,6 +10,7 @@ import ConfiguracaoPage from "@/pages/Configuracao";
 import OrcamentoPage from "@/pages/Orcamento";
 import ResultadoPage from "@/pages/Resultado";
 import { AuthProvider, useAuth } from "@/contexts/AuthContext";
+import { LangProvider } from "@/contexts/LangContext";
 
 const queryClient = new QueryClient();
 
@@ -54,14 +55,16 @@ function Router() {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <TooltipProvider>
-          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-            <Router />
-          </WouterRouter>
-          <Toaster />
-        </TooltipProvider>
-      </AuthProvider>
+      <LangProvider>
+        <AuthProvider>
+          <TooltipProvider>
+            <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+              <Router />
+            </WouterRouter>
+            <Toaster />
+          </TooltipProvider>
+        </AuthProvider>
+      </LangProvider>
     </QueryClientProvider>
   );
 }
