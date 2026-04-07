@@ -16,11 +16,25 @@ export default function Landing() {
       <main className="flex-1 flex flex-col items-center justify-center px-5 py-10">
         <div className="w-full max-w-md text-center space-y-8">
           <div className="space-y-2">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full border border-primary/30 mb-4">
-              <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-8 h-8">
-                <path d="M8 32 L20 8 L32 32" stroke="hsl(0 72% 48%)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                <path d="M12 24 L28 24" stroke="hsl(0 72% 48%)" strokeWidth="2.5" strokeLinecap="round" />
-                <circle cx="20" cy="8" r="2" fill="hsl(0 72% 48%)" />
+            <div className="mb-4">
+              <svg viewBox="0 0 100 125" xmlns="http://www.w3.org/2000/svg" className="w-20 h-24 drop-shadow-md">
+                <path
+                  d="M50 6 C62 22 86 50 86 73 A36 36 0 1 1 14 73 C14 50 38 22 50 6 Z"
+                  fill="#1a365d"
+                />
+                <path
+                  d="M50 44 C57 55 67 66 67 76 A17 17 0 1 1 33 76 C33 66 43 55 50 44 Z"
+                  fill="#d4a017"
+                />
+                <ellipse
+                  cx="57"
+                  cy="66"
+                  rx="4"
+                  ry="6"
+                  transform="rotate(-20 57 66)"
+                  fill="white"
+                  fillOpacity="0.55"
+                />
               </svg>
             </div>
 

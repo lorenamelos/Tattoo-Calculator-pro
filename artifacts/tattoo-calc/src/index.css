@@ -74,41 +74,41 @@
   --elevate-1: rgba(0,0,0, .03);
   --elevate-2: rgba(0,0,0, .07);
 
-  /* Light clean theme with red accents */
-  --background: 0 0% 98%;
-  --foreground: 0 0% 10%;
-  --border: 0 0% 88%;
-  --input: 0 0% 86%;
-  --ring: 0 72% 48%;
+  /* Dark blue + gold theme */
+  --background: 210 17% 98%;
+  --foreground: 217 23% 23%;
+  --border: 214 20% 88%;
+  --input: 214 20% 86%;
+  --ring: 44 80% 46%;
 
   --card: 0 0% 100%;
-  --card-foreground: 0 0% 10%;
-  --card-border: 0 0% 90%;
+  --card-foreground: 217 23% 23%;
+  --card-border: 214 20% 90%;
 
-  --sidebar: 0 0% 96%;
-  --sidebar-foreground: 0 0% 10%;
-  --sidebar-border: 0 0% 88%;
-  --sidebar-primary: 0 72% 48%;
-  --sidebar-primary-foreground: 0 0% 100%;
-  --sidebar-accent: 0 0% 93%;
-  --sidebar-accent-foreground: 0 0% 10%;
-  --sidebar-ring: 0 72% 48%;
+  --sidebar: 210 20% 96%;
+  --sidebar-foreground: 217 23% 23%;
+  --sidebar-border: 214 20% 88%;
+  --sidebar-primary: 44 80% 46%;
+  --sidebar-primary-foreground: 215 56% 23%;
+  --sidebar-accent: 210 20% 93%;
+  --sidebar-accent-foreground: 217 23% 23%;
+  --sidebar-ring: 44 80% 46%;
 
   --popover: 0 0% 100%;
-  --popover-foreground: 0 0% 10%;
-  --popover-border: 0 0% 88%;
+  --popover-foreground: 217 23% 23%;
+  --popover-border: 214 20% 88%;
 
-  --primary: 0 72% 48%;
-  --primary-foreground: 0 0% 100%;
+  --primary: 44 80% 46%;
+  --primary-foreground: 215 56% 14%;
 
-  --secondary: 0 0% 94%;
-  --secondary-foreground: 0 0% 20%;
+  --secondary: 210 20% 94%;
+  --secondary-foreground: 217 23% 25%;
 
-  --muted: 0 0% 94%;
-  --muted-foreground: 0 0% 48%;
+  --muted: 210 20% 94%;
+  --muted-foreground: 215 15% 50%;
 
-  --accent: 0 0% 93%;
-  --accent-foreground: 0 0% 10%;
+  --accent: 210 20% 93%;
+  --accent-foreground: 217 23% 23%;
 
   --destructive: 0 72% 48%;
   --destructive-foreground: 0 0% 100%;
@@ -116,8 +116,8 @@
   --success: 142 60% 38%;
   --success-foreground: 0 0% 100%;
 
-  --chart-1: 0 72% 48%;
-  --chart-2: 217 91% 60%;
+  --chart-1: 44 80% 46%;
+  --chart-2: 215 56% 30%;
   --chart-3: 38 92% 50%;
   --chart-4: 280 65% 60%;
   --chart-5: 142 60% 40%;
@@ -233,12 +233,12 @@
     inset: -1px;
   }
 
-  /* Red glow effect for primary buttons */
+  /* Gold glow effect for primary buttons */
   .btn-primary-glow {
-    box-shadow: 0 0 20px hsl(0 72% 48% / 0.35);
+    box-shadow: 0 0 20px hsl(44 80% 46% / 0.40);
   }
 
   .btn-primary-glow:hover {
-    box-shadow: 0 0 28px hsl(0 72% 48% / 0.5);
+    box-shadow: 0 0 30px hsl(44 80% 46% / 0.55);
   }
 }
