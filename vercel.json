@@ -1,0 +1,5 @@
+{
+  "buildCommand": "pnpm --filter @workspace/tattoo-calc run build",
+  "outputDirectory": "artifacts/tattoo-calc/dist",
+  "installCommand": "pnpm install"
+}
