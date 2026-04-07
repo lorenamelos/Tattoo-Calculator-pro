@@ -13,6 +13,12 @@ export const translations = {
     lang: "PT",
     footer: "Criado por Lorena Melo",
 
+    splash: {
+      appName: "Tattoo Price Calculator",
+      subtitle: "Precificação inteligente para tatuadores",
+      signIn: "Entrar",
+    },
+
     landing: {
       title: "Calculadora de Preços",
       titleHighlight: "para Tatuadores",
@@ -147,6 +153,12 @@ export const translations = {
     currency: "$",
     lang: "EN",
     footer: "Created by Lorena Melo",
+
+    splash: {
+      appName: "Tattoo Price Calculator",
+      subtitle: "Smart pricing for tattoo artists",
+      signIn: "Sign in",
+    },
 
     landing: {
       title: "Pricing Calculator",

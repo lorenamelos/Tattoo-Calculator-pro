@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
+import Splash from "@/pages/Splash";
 import Landing from "@/pages/Landing";
 import LoginPage from "@/pages/Login";
 import CadastroPage from "@/pages/Cadastro";
@@ -35,7 +36,8 @@ function ProtectedRoute({ component: Component }: { component: React.ComponentTy
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Landing} />
+      <Route path="/" component={Splash} />
+      <Route path="/landing" component={Landing} />
       <Route path="/login" component={LoginPage} />
       <Route path="/cadastro" component={CadastroPage} />
       <Route path="/configuracoes">
